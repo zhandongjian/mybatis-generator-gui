@@ -3,17 +3,19 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.zzg</groupId>
     <artifactId>mybatis-generator-gui</artifactId>
-    <version>0.8.0</version>
+    <version>0.8.8-SNAPSHOT</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.mybatis.generator</groupId>
             <artifactId>mybatis-generator-core</artifactId>
-            <version>1.3.5</version>
+            <version>1.3.6</version>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>
@@ -56,6 +58,16 @@
             <artifactId>junit</artifactId>
             <version>4.12</version>
         </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.25</version>
+        </dependency>
+        <dependency>
+            <groupId>com.jcraft</groupId>
+            <artifactId>jsch</artifactId>
+            <version>0.1.54</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -69,42 +81,24 @@
                 </configuration>
             </plugin>
             <plugin>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>3.0.2</version>
-                <executions>
-                    <execution>
-                        <id>copy-files-on-build</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>copy-resources</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${project.build.directory}/classes/lib</outputDirectory>
-                            <resources>
-                                <resource>
-                                    <directory>${basedir}/src/main/lib</directory>
-                                    <include>*.jar</include>
-                                    <filtering>false</filtering>
-                                </resource>
-                            </resources>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
                 <groupId>com.zenjava</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>8.8.3</version>
                 <configuration>
+                    <bundleArguments>
+                        <!-- windows打包开启-->
+                        <icon>${project.basedir}/package/windows/mybatis-generator-gui.ico</icon>
+                        <!-- mac打包开启-->
+                        <icon>${project.basedir}/package/macosx/mybatis-generator-gui.icns</icon>
+                    </bundleArguments>
                     <mainClass>com.zzg.mybatis.generator.MainUI</mainClass>
                     <vendor>Owen Zou</vendor>
                     <verbose>false</verbose>
                     <jfxMainAppJarName>mybatis-generator-gui.jar</jfxMainAppJarName>
-                    <nativeReleaseVersion>0.1</nativeReleaseVersion>
                     <needShortcut>true</needShortcut>
                     <needMenu>true</needMenu>
                     <copyAdditionalAppResourcesToJar>true</copyAdditionalAppResourcesToJar>
-                    <additionalAppResources>${project.basedir}/src/main</additionalAppResources>
+                    <additionalAppResources>${project.basedir}/src/main/resources</additionalAppResources>
                 </configuration>
             </plugin>
         </plugins>
